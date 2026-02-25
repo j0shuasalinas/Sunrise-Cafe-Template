@@ -116,30 +116,25 @@ document.addEventListener('DOMContentLoaded', () => {
   animatedElements.forEach(el => observer.observe(el));
 
   // ==================== MENU CATEGORY FILTER ====================
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const menuItems = document.querySelectorAll('.menu-item');
+  const filterBtns = document.querySelectorAll('.menu-tab');
+  const menuItems = document.querySelectorAll('.menu-card');
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Update active filter button
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       const category = btn.dataset.category;
-
       menuItems.forEach((item, i) => {
         const show = category === 'all' || item.dataset.category === category;
-        item.classList.toggle('hidden', !show);
-
-        // Re-animate visible items with stagger
+        item.style.display = show ? '' : 'none';
         if (show) {
           item.style.opacity = '0';
-          item.style.transform = 'translateY(20px)';
+          item.style.transform = 'translateY(12px)';
+          item.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
           setTimeout(() => {
-            item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
             item.style.opacity = '1';
             item.style.transform = 'translateY(0)';
-          }, i * 50);
+          }, i * 40);
         }
       });
     });
